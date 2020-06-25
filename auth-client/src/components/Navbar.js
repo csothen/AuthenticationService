@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class Navbar extends Component {
   constructor(props) {
@@ -6,13 +7,14 @@ export default class Navbar extends Component {
   }
   render() {
     return (
-      <nav>
-        <h1>Ola</h1>
-        <ul>
-          <li>1</li>
-          <li>2</li>
-        </ul>
-      </nav>
+      <div className="AppNavWrapper">
+        <nav className="AppNavbar">
+          <h1 className="logo">
+            <Link to="/">Authentication</Link>
+          </h1>
+          {this.props.children}
+        </nav>
+      </div>
     );
   }
 }

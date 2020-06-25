@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Provider } from "react-redux";
 
 // COMPONENTS
-import Footer from "./footer";
-import Navbar from "./navbar";
+import Footer from "./Footer";
+import Navbar from "./Navbar";
 
 // STYLES
 import "../App.css";
@@ -15,12 +15,8 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Navbar></Navbar>
-        <div className="MainContainer">
-          <h1>HELLO WORLD!</h1>
-        </div>
-        <Footer>O melhor footer de sempre</Footer>
+      <div className="AppPage">
+        <h1>HELLO WORLD!</h1>
       </div>
     );
   }

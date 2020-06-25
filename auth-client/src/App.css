@@ -6,11 +6,13 @@
 html,
 body,
 #root {
-  height: 100vh;
+  height: 100%;
 }
 
-.App {
-  height: 100%;
+.AppPage {
+  height: calc(100% - 5.5rem);
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
@@ -24,4 +26,42 @@ body,
   align-items: center;
   background: #131313;
   color: white;
+}
+
+.AppNavWrapper {
+  width: 100%;
+  background: #131313;
+  color: white;
+  height: 3rem;
+}
+
+.AppNavbar {
+  margin: 0 1rem;
+  margin-right: 2rem;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
+
+.logo {
+  text-transform: uppercase;
+  font-family: sans-serif;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+}
+
+nav h1 {
+  flex: 4;
+}
+nav ul {
+  font-family: sans-serif;
+  flex: 1;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
 }

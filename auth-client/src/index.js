@@ -6,7 +6,7 @@ import { createStore } from "redux";
 import "./index.css";
 
 // COMPONENTS
-import Root from "./components/root";
+import Root from "./components/Root";
 import counter from "./redux/reducers/example";
 
 const store = createStore(counter);
