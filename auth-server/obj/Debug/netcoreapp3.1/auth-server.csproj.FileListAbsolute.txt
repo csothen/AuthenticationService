@@ -18,3 +18,4 @@ C:\Users\Cesar\Desktop\Projetos\AuthenticationService\auth-server\obj\Debug\netc
 C:\Users\Cesar\Desktop\Projetos\AuthenticationService\auth-server\obj\Debug\netcoreapp3.1\auth-server.dll
 C:\Users\Cesar\Desktop\Projetos\AuthenticationService\auth-server\obj\Debug\netcoreapp3.1\auth-server.pdb
 C:\Users\Cesar\Desktop\Projetos\AuthenticationService\auth-server\obj\Debug\netcoreapp3.1\auth-server.csproj.CopyComplete
+C:\Users\Cesar\Desktop\Projetos\AuthenticationService\auth-server\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll

@@ -20519,42 +20519,6 @@
     "CSharpLanguageVersion": 800
   },
   "RootNamespace": "auth_server",
-  "Documents": [
-    {
-      "FilePath": "c:\\Users\\Cesar\\Desktop\\Projetos\\AuthenticationService\\auth-server\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
-      "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\Cesar\\Desktop\\Projetos\\AuthenticationService\\auth-server\\Views\\Home\\Privacy.cshtml",
-      "TargetPath": "Views\\Home\\Privacy.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\Cesar\\Desktop\\Projetos\\AuthenticationService\\auth-server\\Views\\_ViewImports.cshtml",
-      "TargetPath": "Views\\_ViewImports.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\Cesar\\Desktop\\Projetos\\AuthenticationService\\auth-server\\Views\\Shared\\_Layout.cshtml",
-      "TargetPath": "Views\\Shared\\_Layout.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\Cesar\\Desktop\\Projetos\\AuthenticationService\\auth-server\\Views\\Home\\Index.cshtml",
-      "TargetPath": "Views\\Home\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\Cesar\\Desktop\\Projetos\\AuthenticationService\\auth-server\\Views\\Shared\\Error.cshtml",
-      "TargetPath": "Views\\Shared\\Error.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\Cesar\\Desktop\\Projetos\\AuthenticationService\\auth-server\\Views\\_ViewStart.cshtml",
-      "TargetPath": "Views\\_ViewStart.cshtml",
-      "FileKind": "mvc"
-    }
-  ],
+  "Documents": [],
   "SerializationFormat": "0.2"
 }
