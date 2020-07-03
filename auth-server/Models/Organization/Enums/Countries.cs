@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Microsoft.Extensions.Configuration;
 
 namespace auth_server.Models.OrganizationModels
 {
@@ -11,20 +12,22 @@ namespace auth_server.Models.OrganizationModels
     {
         private Dictionary<string, List<string>> _info;
         private WebClient _client;
-        public CountryInfo()
+        private IConfiguration _config;
+        public CountryInfo(IConfiguration config)
         {
+            this._config = config;
             this._client = new WebClient();
-            this._info = setup().Result;
+            this._info = setup(this._config["CountriesAPIToken"]).Result;
         }
 
-        private async Task<Dictionary<string, List<string>>> setup()
+        private async Task<Dictionary<string, List<string>>> setup(string token)
         {
             Dictionary<string, List<string>> info = new Dictionary<string, List<string>>();
             List<string> countries = new List<string>();
             Uri uriCountries = new Uri("https://restcountries.eu/rest/v2/all");
             var countriesResponse = this._client.DownloadString(uriCountries);
             var jsonString = JsonConvert.DeserializeObject<List<JObject>>(countriesResponse);
-            this._client.Headers.Add("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfZW1haWwiOiJwb2V0LmNsYXlib3JuQGFuZHllcy5uZXQiLCJhcGlfdG9rZW4iOiJjb3BUWEpEbVVhN3V5RTBVT25MaTYwSmdlNFVobnd0SXVETHNucVY0YnZnRm9BcnVuYzZDSmJrT05EWFY5SnNZQnJBIn0sImV4cCI6MTU5Mzc5NzEzMH0.dNuQCDIYl6T1gy_tDIEOX9ZtnXH054Fh6gv1AsBFQY0");
+            this._client.Headers.Add("Authorization", "Bearer " + token);
             jsonString.ForEach(delegate (JObject o)
             {
 

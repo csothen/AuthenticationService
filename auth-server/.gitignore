@@ -212,4 +212,5 @@ project.lock.json
 *.Specs_*.html
 
 
-appsettings*.json
+appsettings.json
+appsettings.Development.json
