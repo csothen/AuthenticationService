@@ -6,4 +6,4 @@ This service was created with the mission of handling the authentication of user
 ### Frontend
 * React
 ### Backend
-* ASP.NET Core
+* .NET Core
