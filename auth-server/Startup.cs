@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using auth_server.Repositories;
 using auth_server.Services;
 using auth_server.Repositories.OrganizationContext;
+using auth_server.Repositories.CountryContext;
 
 namespace auth_server
 {
@@ -34,9 +36,11 @@ namespace auth_server
 
             // Services
             services.AddTransient<IOrganizationService, OrganizationService>();
+            services.AddTransient<ICountryService, CountryService>();
 
             // Repositories
             services.AddTransient<IOrganizationRepository, OrganizationRepository>();
+            services.AddTransient<ICountryRepository, CountryRepository>();
 
 
             // Others
@@ -44,7 +48,7 @@ namespace auth_server
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Context ctx)
         {
             if (env.IsDevelopment())
             {
@@ -59,6 +63,9 @@ namespace auth_server
             app.UseRouting();
             app.UseCors();
             app.UseAuthorization();
+
+            // RUN "dotnet ef migrations add NAME_OF_ACTION" to update DB
+            ctx.Database.Migrate();
 
             app.UseEndpoints(endpoints =>
             {
