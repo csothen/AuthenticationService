@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using auth_server.Repositories;
 
 namespace auth_server.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20200706074927_AddedOwnedProperties")]
+    partial class AddedOwnedProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,10 +23,14 @@ namespace auth_server.Migrations
 
             modelBuilder.Entity("auth_server.Models.CountryModels.Country", b =>
                 {
-                    b.Property<string>("_name")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("_cid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("_name");
+                    b.Property<string>("_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("_cid");
 
                     b.ToTable("Countries");
                 });
@@ -72,23 +78,20 @@ namespace auth_server.Migrations
                 {
                     b.OwnsMany("auth_server.Models.CountryModels.State", "_states", b1 =>
                         {
-                            b1.Property<string>("Country_name")
-                                .HasColumnType("nvarchar(450)");
+                            b1.Property<Guid>("Country_cid")
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("int")
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                            b1.Property<string>("_name")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("Country_name", "Id");
+                            b1.HasKey("Country_cid", "Id");
 
                             b1.ToTable("State");
 
                             b1.WithOwner()
-                                .HasForeignKey("Country_name");
+                                .HasForeignKey("Country_cid");
                         });
                 });
 

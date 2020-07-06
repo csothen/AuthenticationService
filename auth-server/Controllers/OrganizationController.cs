@@ -21,7 +21,7 @@ namespace auth_server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetOrganization()
+        public async Task<IActionResult> GetOrganizations()
         {
             List<Organization> organizations = await this._service.GetOrganizations();
             return Ok(organizations);

@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using auth_server.Models.OrganizationModels;
 using auth_server.Models.CountryModels;
+using auth_server.Models.UserTemplateModels;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace auth_server.Repositories
 {
@@ -17,9 +20,14 @@ namespace auth_server.Repositories
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Organization
             modelBuilder.Entity<Organization>().HasKey(o => o._oid);
             modelBuilder.Entity<Organization>().HasOne<UserTemplate>().WithMany().HasForeignKey(o => o._templateId);
-            modelBuilder.Entity<Country>().HasKey(c => c._cid);
+
+            // Countries
+            modelBuilder.Entity<Country>().HasKey(c => c._name);
+
+            // User Templates
             modelBuilder.Entity<UserTemplate>().HasKey(u => u._tid);
         }
     }

@@ -1,5 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace auth_server.Models.OrganizationModels
 {
+    [Owned]
     public class Address
     {
         private string _country;
@@ -13,6 +16,11 @@ namespace auth_server.Models.OrganizationModels
             this._city = city;
             this._streetName = streetName;
             this._postalCode = postalCode;
+        }
+
+        public Address()
+        {
+            //Default
         }
     }
 }

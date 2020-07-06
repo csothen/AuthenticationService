@@ -8,11 +8,11 @@ namespace auth_server.Models.OrganizationModels
         [Key]
         public Guid _oid { get; private set; }
         public Guid? _templateId { get; private set; }
-        private string _email;
-        private string _name;
-        private Address _address;
-        private string _password;
-        private string _salt;
+        public string _email { get; private set; }
+        public string _name { get; private set; }
+        public Address _address { get; private set; }
+        public string _password { get; private set; }
+        public string _salt { get; private set; }
 
         public Organization(string email, string name, Address address, string password, string salt)
         {

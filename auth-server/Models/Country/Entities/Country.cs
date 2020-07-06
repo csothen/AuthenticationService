@@ -7,13 +7,11 @@ namespace auth_server.Models.CountryModels
     public class Country
     {
         [Key]
-        public Guid _cid { get; private set; }
-        private string _name;
-        private List<State> _states;
+        public string _name { get; private set; }
+        public ICollection<State> _states { get; private set; }
 
-        public Country(string name, List<State> states)
+        public Country(string name, ICollection<State> states)
         {
-            this._cid = new Guid();
             this._name = name;
             this._states = states;
         }
