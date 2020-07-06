@@ -65,9 +65,9 @@ namespace auth_server.Services
             }
         }
 
-        public async Task<List<Country>> GetCountries()
+        public async Task<ICollection<Country>> GetCountries()
         {
-            List<Country> countries = await _repo.GetAll();
+            ICollection<Country> countries = await _repo.GetAll();
             return countries;
         }
     }

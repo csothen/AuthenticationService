@@ -26,7 +26,8 @@ namespace auth_server.Controllers
             bool success = await this._service.SetupCountries();
             if (success)
             {
-                return Ok("Countries were setup");
+                ICollection<Country> countries = await this._service.GetCountries();
+                return Ok(countries);
             }
             else
             {

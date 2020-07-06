@@ -8,6 +8,6 @@ namespace auth_server.Services
     public interface ICountryService
     {
         Task<bool> SetupCountries();
-        Task<List<Country>> GetCountries();
+        Task<ICollection<Country>> GetCountries();
     }
 }

@@ -7,7 +7,7 @@ namespace auth_server.Repositories.CountryContext
 {
     public interface ICountryRepository
     {
-        Task<List<Country>> GetAll();
-        Task<bool> Create(Country c);
+        Task<ICollection<Country>> GetAll();
+        Task Create(Country c);
     }
 }
