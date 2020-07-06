@@ -7,6 +7,6 @@ namespace auth_server.Services
 {
     public interface IOrganizationService
     {
-        Task<List<Organization>> GetOrganizations();
+        Task<ICollection<Organization>> GetOrganizations();
     }
 }

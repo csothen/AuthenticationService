@@ -1,7 +1,5 @@
-using Microsoft.EntityFrameworkCore.SqlServer;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 using auth_server.Models.OrganizationModels;
@@ -17,7 +15,7 @@ namespace auth_server.Repositories.OrganizationContext
             _dbContext = dbContext;
         }
 
-        public async Task<List<Organization>> GetAll()
+        public async Task<ICollection<Organization>> GetAll()
         {
             return await _dbContext.Organizations.ToListAsync();
         }

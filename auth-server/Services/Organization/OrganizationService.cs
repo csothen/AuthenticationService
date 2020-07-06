@@ -15,9 +15,9 @@ namespace auth_server.Services
             this._repo = repo;
         }
 
-        public async Task<List<Organization>> GetOrganizations()
+        public async Task<ICollection<Organization>> GetOrganizations()
         {
-            List<Organization> orgs = await _repo.GetAll();
+            ICollection<Organization> orgs = await _repo.GetAll();
             return orgs;
         }
 

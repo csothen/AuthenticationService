@@ -7,6 +7,6 @@ namespace auth_server.Repositories.OrganizationContext
 {
     public interface IOrganizationRepository
     {
-        Task<List<Organization>> GetAll();
+        Task<ICollection<Organization>> GetAll();
     }
 }
