@@ -10,6 +10,6 @@ namespace auth_server.Services
         Task<ICollection<UserTemplate>> GetAll();
         Task<UserTemplate> GetById(Guid id);
         Task<UserTemplate> Create(UserTemplate template);
-        Task Destroy(UserTemplate template);
+        Task<UserTemplate> Delete(Guid id);
     }
 }

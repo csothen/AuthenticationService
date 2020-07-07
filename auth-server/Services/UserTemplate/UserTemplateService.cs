@@ -47,8 +47,10 @@ namespace auth_server.Services
         {
             try
             {
+                UserTemplate existingTemplate = await this.GetById(template._tid);
+                if (existingTemplate != null) return null;
                 UserTemplate createdTemplate = await this._repo.Create(template);
-                return template;
+                return createdTemplate;
             }
             catch (Exception)
             {
@@ -56,15 +58,18 @@ namespace auth_server.Services
             }
         }
 
-        public async Task Destroy(UserTemplate template)
+        public async Task<UserTemplate> Delete(Guid id)
         {
             try
             {
-                await this._repo.Destroy(template);
+                UserTemplate template = await this.GetById(id);
+                if (template == null) return null;
+                await this._repo.Delete(template);
+                return template;
             }
             catch (System.Exception)
             {
-                throw new Exception("Internal error destroying an existing User Template");
+                throw new Exception("Internal error deleting an existing User Template");
             }
         }
     }

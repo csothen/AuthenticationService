@@ -26,18 +26,16 @@ namespace auth_server.Repositories.UserTemplateContext
         {
             return await _dbContext.UserTemplates
             .Where(template => template._tid == id)
-            .FirstOrDefaultAsync();
+            .SingleOrDefaultAsync();
         }
         public async Task<UserTemplate> Create(UserTemplate template)
         {
             _dbContext.UserTemplates.Add(template);
             await _dbContext.SaveChangesAsync();
-            return await _dbContext.UserTemplates
-            .Where(t => t._tid == template._tid)
-            .FirstOrDefaultAsync();
+            return await this.GetById(template._tid);
         }
 
-        public async Task Destroy(UserTemplate template)
+        public async Task Delete(UserTemplate template)
         {
             _dbContext.UserTemplates.Remove(template);
             await _dbContext.SaveChangesAsync();

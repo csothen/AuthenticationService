@@ -11,7 +11,7 @@ namespace auth_server.Repositories.UserTemplateContext
         Task<ICollection<UserTemplate>> GetAll();
         Task<UserTemplate> GetById(Guid id);
         Task<UserTemplate> Create(UserTemplate template);
-        Task Destroy(UserTemplate template);
+        Task Delete(UserTemplate template);
     }
 
 }
