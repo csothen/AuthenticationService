@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,5 +9,8 @@ namespace auth_server.Repositories.OrganizationContext
     public interface IOrganizationRepository
     {
         Task<ICollection<Organization>> GetAll();
+        Task<Organization> GetById(Guid id);
+        Task<Organization> Create(Organization org);
+        Task Delete(Organization org);
     }
 }
