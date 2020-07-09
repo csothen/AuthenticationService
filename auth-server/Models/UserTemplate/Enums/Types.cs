@@ -3,12 +3,12 @@ namespace auth_server.Models.UserTemplateModels
 {
     public enum ENUM_TYPES
     {
+        USERNAME,
+        EMAIL,
+        PASSWORD,
+        STRING,
+        DATE,
         INT,
         DOUBLE,
-        STRING,
-        USERNAME,
-        PASSWORD,
-        EMAIL,
-        DATE,
     }
 }

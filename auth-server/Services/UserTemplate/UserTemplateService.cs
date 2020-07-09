@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
 using auth_server.Models.UserTemplateModels;
 using auth_server.Repositories.UserTemplateContext;
 
@@ -17,12 +16,17 @@ namespace auth_server.Services
             this._repo = repo;
         }
 
-        public async Task<ICollection<UserTemplate>> GetAll()
+        public async Task<ICollection<UserTemplateDTO>> GetAll()
         {
             try
             {
+                ICollection<UserTemplateDTO> dtos = new List<UserTemplateDTO>();
                 ICollection<UserTemplate> templates = await this._repo.GetAll();
-                return templates;
+                foreach (UserTemplate t in templates)
+                {
+                    dtos.Add(new UserTemplateDTO(t._tid, t.attributes));
+                }
+                return dtos;
             }
             catch (Exception)
             {
@@ -30,12 +34,20 @@ namespace auth_server.Services
             }
         }
 
-        public async Task<UserTemplate> GetById(Guid id)
+        public async Task<UserTemplateDTO> GetById(Guid id)
         {
             try
             {
                 UserTemplate template = await this._repo.GetById(id);
-                return template;
+                if (template != null)
+                {
+                    UserTemplateDTO dto = new UserTemplateDTO(template._tid, template.attributes);
+                    return dto;
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception)
             {
@@ -43,14 +55,15 @@ namespace auth_server.Services
             }
         }
 
-        public async Task<UserTemplate> Create(UserTemplate template)
+        public async Task<UserTemplateDTO> Create(UserTemplate template)
         {
             try
             {
-                UserTemplate existingTemplate = await this.GetById(template._tid);
+                UserTemplateDTO existingTemplate = await this.GetById(template._tid);
                 if (existingTemplate != null) return null;
                 UserTemplate createdTemplate = await this._repo.Create(template);
-                return createdTemplate;
+                UserTemplateDTO dto = new UserTemplateDTO(createdTemplate._tid, createdTemplate.attributes);
+                return dto;
             }
             catch (Exception)
             {
@@ -58,14 +71,15 @@ namespace auth_server.Services
             }
         }
 
-        public async Task<UserTemplate> Delete(Guid id)
+        public async Task<UserTemplateDTO> Delete(Guid id)
         {
             try
             {
-                UserTemplate template = await this.GetById(id);
+                UserTemplate template = await this._repo.GetById(id);
                 if (template == null) return null;
                 await this._repo.Delete(template);
-                return template;
+                UserTemplateDTO dto = new UserTemplateDTO(template._tid, template.attributes);
+                return dto;
             }
             catch (System.Exception)
             {

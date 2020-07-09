@@ -35,20 +35,20 @@ namespace auth_server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("_email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("_name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("_password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("_salt")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid?>("_templateId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("salt")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("_oid");
 
@@ -70,7 +70,7 @@ namespace auth_server.Migrations
 
             modelBuilder.Entity("auth_server.Models.CountryModels.Country", b =>
                 {
-                    b.OwnsMany("auth_server.Models.CountryModels.State", "_states", b1 =>
+                    b.OwnsMany("auth_server.Models.CountryModels.State", "states", b1 =>
                         {
                             b1.Property<string>("Country_name")
                                 .HasColumnType("nvarchar(450)");
@@ -80,7 +80,7 @@ namespace auth_server.Migrations
                                 .HasColumnType("int")
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                            b1.Property<string>("_name")
+                            b1.Property<string>("name")
                                 .HasColumnType("nvarchar(max)");
 
                             b1.HasKey("Country_name", "Id");
@@ -98,7 +98,7 @@ namespace auth_server.Migrations
                         .WithMany()
                         .HasForeignKey("_templateId");
 
-                    b.OwnsOne("auth_server.Models.OrganizationModels.Address", "_address", b1 =>
+                    b.OwnsOne("auth_server.Models.OrganizationModels.Address", "address", b1 =>
                         {
                             b1.Property<Guid>("Organization_oid")
                                 .HasColumnType("uniqueidentifier");
@@ -114,7 +114,7 @@ namespace auth_server.Migrations
 
             modelBuilder.Entity("auth_server.Models.UserTemplateModels.UserTemplate", b =>
                 {
-                    b.OwnsMany("auth_server.Models.UserTemplateModels.UserTemplateAttribute", "_attributes", b1 =>
+                    b.OwnsMany("auth_server.Models.UserTemplateModels.UserTemplateAttribute", "attributes", b1 =>
                         {
                             b1.Property<Guid>("UserTemplate_tid")
                                 .HasColumnType("uniqueidentifier");
@@ -124,10 +124,10 @@ namespace auth_server.Migrations
                                 .HasColumnType("int")
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                            b1.Property<string>("_name")
+                            b1.Property<string>("name")
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<int>("_type")
+                            b1.Property<int>("type")
                                 .HasColumnType("int");
 
                             b1.HasKey("UserTemplate_tid", "Id");

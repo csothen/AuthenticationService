@@ -5,13 +5,13 @@ namespace auth_server.Models.UserTemplateModels
     [Owned]
     public class UserTemplateAttribute
     {
-        public string _name { get; private set; }
-        public ENUM_TYPES _type { get; private set; }
+        public string name { get; set; }
+        public ENUM_TYPES type { get; set; }
 
-        public UserTemplateAttribute(string name, ENUM_TYPES type)
+        public UserTemplateAttribute(string p_name, ENUM_TYPES p_type)
         {
-            this._name = name;
-            this._type = type;
+            this.name = p_name;
+            this.type = p_type;
         }
 
         public UserTemplateAttribute()

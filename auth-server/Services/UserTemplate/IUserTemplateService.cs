@@ -7,9 +7,9 @@ namespace auth_server.Services
 {
     public interface IUserTemplateService
     {
-        Task<ICollection<UserTemplate>> GetAll();
-        Task<UserTemplate> GetById(Guid id);
-        Task<UserTemplate> Create(UserTemplate template);
-        Task<UserTemplate> Delete(Guid id);
+        Task<ICollection<UserTemplateDTO>> GetAll();
+        Task<UserTemplateDTO> GetById(Guid id);
+        Task<UserTemplateDTO> Create(UserTemplate templateDTO);
+        Task<UserTemplateDTO> Delete(Guid id);
     }
 }

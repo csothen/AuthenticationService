@@ -8,20 +8,20 @@ namespace auth_server.Models.OrganizationModels
         [Key]
         public Guid _oid { get; private set; }
         public Guid? _templateId { get; private set; }
-        public string _email { get; private set; }
-        public string _name { get; private set; }
-        public Address _address { get; private set; }
-        public string _password { get; private set; }
-        public string _salt { get; private set; }
+        public string email { get; set; }
+        public string name { get; set; }
+        public Address address { get; set; }
+        public string password { get; set; }
+        public string salt { get; set; }
 
-        public Organization(string email, string name, Address address, string password, string salt)
+        public Organization(string p_email, string p_name, Address p_address, string p_password, string p_salt)
         {
             this._oid = new Guid();
-            this._email = email;
-            this._name = name;
-            this._address = address;
-            this._password = password;
-            this._salt = salt;
+            this.email = p_email;
+            this.name = p_name;
+            this.address = p_address;
+            this.password = p_password;
+            this.salt = p_salt;
         }
 
         public Organization()

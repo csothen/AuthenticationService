@@ -54,7 +54,7 @@ namespace auth_server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrganization(Organization org)
+        public async Task<IActionResult> CreateOrganization([FromBody] Organization org)
         {
             try
             {

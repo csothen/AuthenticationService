@@ -7,11 +7,11 @@ namespace auth_server.Models.CountryModels
     public class State
     {
         [JsonProperty("state_name")]
-        public string _name { get; private set; }
+        public string name { get; private set; }
 
-        public State(string name)
+        public State(string p_name)
         {
-            this._name = name;
+            this.name = p_name;
         }
 
         public State()
