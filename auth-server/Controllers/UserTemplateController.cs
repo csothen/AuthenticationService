@@ -5,6 +5,7 @@ using auth_server.Services;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using System;
 
 namespace auth_server.Controllers
@@ -27,7 +28,7 @@ namespace auth_server.Controllers
         {
             try
             {
-                ICollection<UserTemplate> templates = await this._service.GetAll();
+                ICollection<UserTemplateDTO> templates = await this._service.GetAll();
                 if (templates.Count == 0) return NotFound("There are currently no templates registered");
                 return Ok(templates);
             }
@@ -43,7 +44,7 @@ namespace auth_server.Controllers
         {
             try
             {
-                UserTemplate template = await this._service.GetById(Guid.Parse(id));
+                UserTemplateDTO template = await this._service.GetById(Guid.Parse(id));
                 if (template == null) return NotFound(String.Format("The template with ID {0} does not exist", id));
                 return Ok(template);
             }
@@ -55,13 +56,13 @@ namespace auth_server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTemplate(UserTemplate template)
+        public async Task<IActionResult> CreateTemplate([FromBody] UserTemplate template)
         {
             try
             {
-                UserTemplate createdTemplate = await this._service.Create(template);
+                UserTemplateDTO createdTemplate = await this._service.Create(template);
                 if (createdTemplate == null) return BadRequest("The template you tried to create already exists");
-                return CreatedAtAction(nameof(GetTemplateById), new { id = template._tid }, createdTemplate);
+                return Created("template/", createdTemplate._tid);
             }
             catch (Exception e)
             {
@@ -75,7 +76,7 @@ namespace auth_server.Controllers
         {
             try
             {
-                UserTemplate template = await this._service.Delete(Guid.Parse(id));
+                UserTemplateDTO template = await this._service.Delete(Guid.Parse(id));
                 if (template == null) return NotFound(String.Format("The template with ID {0} does not exist", id));
                 return Ok(String.Format("The template with ID {0} was successfully deleted", id));
             }
