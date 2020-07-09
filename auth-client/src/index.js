@@ -1,14 +1,10 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { createStore } from "redux";
+import { render } from "react-dom";
 
 // STYLES
 import "./index.css";
 
 // COMPONENTS
-import Root from "./components/Root";
-import counter from "./redux/reducers/example";
+import App from "./components/App";
 
-const store = createStore(counter);
-
-ReactDOM.render(<Root store={store} />, document.getElementById("root"));
+render(<App />, document.getElementById("root"));

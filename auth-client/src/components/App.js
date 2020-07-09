@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import { Provider } from "react-redux";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 // COMPONENTS
-import Footer from "./Footer";
-import Navbar from "./Navbar";
-
+import HomePage from "./Pages/HomePage";
+import Navbar from "./Presentational/Navbar";
+import Footer from "./Presentational/Footer";
+import UserTemplateCreationPage from "./Pages/UserTemplateCreationPage";
+import AuthenticationPage from "./Pages/AuthenticationPage";
+import Page404 from "./Pages/Page404";
 // STYLES
 import "../App.css";
 
@@ -15,9 +18,22 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="AppPage">
-        <h1>HELLO WORLD!</h1>
-      </div>
+      <Router>
+        <Switch>
+          <Route path="/auth">
+            <AuthenticationPage />
+          </Route>
+          <Route path="/templates">
+            <UserTemplateCreationPage />
+          </Route>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          <Route path="/">
+            <Page404 />
+          </Route>
+        </Switch>
+      </Router>
     );
   }
 }
