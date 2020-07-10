@@ -34,9 +34,7 @@ body,
   margin-bottom: 4rem;
   border-radius: 5px;
   border: solid 2px black;
-  width: 25%;
   min-width: 300px;
-  height: 50%;
   min-height: 470px;
 }
 
@@ -46,15 +44,7 @@ body,
   height: 90%;
   padding: 2rem;
 }
-.signin-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-top: 2rem;
-  height: 100%;
-}
-
-.signup-form {
+.form {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -63,6 +53,7 @@ body,
 }
 
 .button-container {
+  padding-top: 2rem;
   display: flex;
   justify-content: center;
 }
