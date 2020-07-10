@@ -11,6 +11,7 @@ namespace auth_server.Services
         Task<ICollection<Organization>> GetOrganizations();
         Task<Organization> GetById(Guid id);
         Task<Organization> Create(Organization org);
+        Task<Organization> Update(Organization org);
         Task<Organization> Delete(Guid id);
     }
 }

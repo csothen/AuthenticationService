@@ -67,9 +67,24 @@ namespace auth_server.Services
                 await this._repo.Delete(org);
                 return org;
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 throw new Exception("Internal error deleting an existing Organization");
+            }
+        }
+
+        public async Task<Organization> Update(Organization updatedOrg)
+        {
+            try
+            {
+                Organization org = await this.GetById(updatedOrg._oid);
+                if (org == null) return null;
+                await this._repo.Update(updatedOrg);
+                return updatedOrg;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Internal error updating an existing Organization");
             }
         }
 
