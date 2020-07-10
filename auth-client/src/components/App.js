@@ -7,6 +7,7 @@ import Navbar from "./Presentational/Navbar";
 import Footer from "./Presentational/Footer";
 import UserTemplateCreationPage from "./Pages/UserTemplateCreationPage";
 import AuthenticationPage from "./Pages/AuthenticationPage";
+import ExternalAuthPage from "./Pages/ExternalAuthPage";
 import Page404 from "./Pages/Page404";
 // STYLES
 import "../App.css";
@@ -19,20 +20,15 @@ export default class App extends Component {
   render() {
     return (
       <Router>
-        <Switch>
-          <Route path="/auth">
-            <AuthenticationPage />
-          </Route>
-          <Route path="/templates">
-            <UserTemplateCreationPage />
-          </Route>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Route path="/">
-            <Page404 />
-          </Route>
-        </Switch>
+        <div className="app-page">
+          <Switch>
+            <Route path="/external/auth/:orgRef" component={ExternalAuthPage} />
+            <Route exact path="/auth" component={AuthenticationPage} />
+            <Route path="/templates" component={UserTemplateCreationPage} />
+            <Route exact path="/" component={HomePage} />
+            <Route path="/" component={Page404} />
+          </Switch>
+        </div>
       </Router>
     );
   }
