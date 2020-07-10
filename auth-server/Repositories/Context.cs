@@ -22,13 +22,14 @@ namespace auth_server.Repositories
         {
             // Organization
             modelBuilder.Entity<Organization>().HasKey(o => o._oid);
-            modelBuilder.Entity<Organization>().HasOne<UserTemplate>().WithMany().HasForeignKey(o => o._templateId);
+            modelBuilder.Entity<Organization>().HasMany(o => o._templates).WithOne(t => t.organization);
 
             // Countries
             modelBuilder.Entity<Country>().HasKey(c => c._name);
 
             // User Templates
             modelBuilder.Entity<UserTemplate>().HasKey(u => u._tid);
+            modelBuilder.Entity<UserTemplate>().HasOne(t => t.organization);
         }
     }
 }

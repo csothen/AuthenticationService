@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using auth_server.Repositories;
 
 namespace auth_server.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20200709133032_UserTemplateAndOrganizationMigration")]
+    partial class UserTemplateAndOrganizationMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,6 +91,22 @@ namespace auth_server.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("Country_name");
+                        });
+                });
+
+            modelBuilder.Entity("auth_server.Models.OrganizationModels.Organization", b =>
+                {
+                    b.OwnsOne("auth_server.Models.OrganizationModels.Address", "address", b1 =>
+                        {
+                            b1.Property<Guid>("Organization_oid")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.HasKey("Organization_oid");
+
+                            b1.ToTable("Organizations");
+
+                            b1.WithOwner()
+                                .HasForeignKey("Organization_oid");
                         });
                 });
 

@@ -52,3 +52,10 @@ C:\Users\Cesar\Desktop\Projetos\AuthenticationService\auth-server\bin\Debug\netc
 C:\Users\Cesar\Desktop\Projetos\AuthenticationService\auth-server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\Cesar\Desktop\Projetos\AuthenticationService\auth-server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Cesar\Desktop\Projetos\AuthenticationService\auth-server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\Cesar\Desktop\Projetos\AuthenticationService\auth-server\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Cesar\Desktop\Projetos\AuthenticationService\auth-server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Cesar\Desktop\Projetos\AuthenticationService\auth-server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+C:\Users\Cesar\Desktop\Projetos\AuthenticationService\auth-server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Cesar\Desktop\Projetos\AuthenticationService\auth-server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Cesar\Desktop\Projetos\AuthenticationService\auth-server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Cesar\Desktop\Projetos\AuthenticationService\auth-server\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
