@@ -6,8 +6,6 @@ const TemplateAttribute = (props) => {
       {props.options[option]}
     </option>
   ));
-  console.log(props.ID);
-
   return (
     <div className="row">
       <div className="six columns">
@@ -19,13 +17,16 @@ const TemplateAttribute = (props) => {
           name={"attr_" + props.ID}
         />
       </div>
-      <div className="six columns">
+      <div className="five columns">
         <select
           className="u-full-width"
           onChange={(e) => props.selectHandler(e, props.ID)}
         >
           {options}
         </select>
+      </div>
+      <div className="one columns">
+        <button onClick={(e) => props.removeHandler(e, props.ID)}>❌</button>
       </div>
     </div>
   );

@@ -14,26 +14,37 @@ const options = {
 export default class TemplateCreationForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      counter: 0,
-      elements: [],
-      attributes: [
-        {
-          name: "",
-          type: 0,
-        },
-      ],
-    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChanges = this.handleInputChanges.bind(this);
     this.handleSelectChanges = this.handleSelectChanges.bind(this);
     this.appendAttribute = this.appendAttribute.bind(this);
+    this.removeAttribute = this.removeAttribute.bind(this);
     this.validateAttributes = this.validateAttributes.bind(this);
+
+    this.state = {
+      counter: 0,
+      elements: [
+        <TemplateAttribute
+          ID={0}
+          options={options}
+          inputHandler={this.handleInputChanges}
+          selectHandler={this.handleSelectChanges}
+          removeHandler={this.removeAttribute}
+        />,
+      ],
+      attributes: [
+        {
+          id: 0,
+          name: "",
+          type: 0,
+        },
+      ],
+    };
   }
 
   validateAttributes() {
-    for (var i = 0; i < this.state.attributes.length; i++) {
+    for (let i = 0; i < this.state.attributes.length; i++) {
       const attr = this.state.attributes[i];
       if (attr["name"] === "") {
         return false;
@@ -57,11 +68,13 @@ export default class TemplateCreationForm extends Component {
               options={options}
               inputHandler={this.handleInputChanges}
               selectHandler={this.handleSelectChanges}
+              removeHandler={this.removeAttribute}
             />,
           ],
           attributes: [
             ...this.state.attributes,
             {
+              id: this.state.counter,
               name: "",
               type: 0,
             },
@@ -71,33 +84,60 @@ export default class TemplateCreationForm extends Component {
     );
   }
 
+  removeAttribute(event, id) {
+    event.preventDefault();
+    let elements = [...this.state.elements];
+    let attributes = [...this.state.attributes];
+    attributes = attributes.filter((value, i, arr) => {
+      if (value.id === id) {
+        elements.splice(i, 1);
+        return false;
+      }
+      return true;
+    });
+    this.setState({
+      elements,
+      attributes,
+    });
+  }
+
   handleInputChanges(event, id) {
     let attributes = [...this.state.attributes];
-    let attribute = { ...attributes[id] };
-    attribute.name = event.target.value;
-    attributes[id] = attribute;
-    this.setState({ attributes });
+    for (let i = 0; i < attributes.length; i++) {
+      let attribute = attributes[i];
+      if (attribute.id === id) {
+        attribute.name = event.target.value;
+        attributes[i] = attribute;
+        this.setState({ attributes });
+        break;
+      }
+    }
   }
 
   handleSelectChanges(event, id) {
     let attributes = [...this.state.attributes];
-    let attribute = { ...attributes[id] };
-    attribute.type = parseInt(event.target.value);
-    attributes[id] = attribute;
-    this.setState({ attributes });
+    for (let i = 0; i < attributes.length; i++) {
+      let attribute = attributes[i];
+      if (attribute.id === id) {
+        attribute.type = parseInt(event.target.value);
+        attributes[i] = attribute;
+        this.setState({ attributes });
+        break;
+      }
+    }
   }
 
   async handleSubmit(event) {
     event.preventDefault();
     if (this.validateAttributes()) {
-      var response = await fetch("https://localhost:5001/template", {
+      let response = await fetch("https://localhost:5001/template", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ attributes: this.state.attributes }),
       });
-      console.log(response.body);
+      console.log(response.json());
     } else {
       console.log("Verificar que todos os campos estão preenchidos");
     }
@@ -106,14 +146,8 @@ export default class TemplateCreationForm extends Component {
   render() {
     return (
       <form style={{ marginTop: "5rem" }}>
-        <TemplateAttribute
-          ID={0}
-          options={options}
-          inputHandler={this.handleInputChanges}
-          selectHandler={this.handleSelectChanges}
-        />
         {this.state.elements}
-        <div className="button-container">
+        <div className="row" style={{ paddingTop: "15px" }}>
           <input
             className="u-full-width six columns"
             type="submit"
@@ -121,7 +155,7 @@ export default class TemplateCreationForm extends Component {
             value="Create"
           />
           <input
-            className="u-full-width six columns"
+            className="u-full-width five columns"
             type="submit"
             onClick={(e) => this.appendAttribute(e)}
             value="Add"
