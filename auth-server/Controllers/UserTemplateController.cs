@@ -1,17 +1,22 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 using auth_server.Models.UserTemplateModels;
 using auth_server.Services;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using System;
+using auth_server.Controllers.Commands;
+using auth_server.Models.Responses;
+using auth_server.Utils;
 
 namespace auth_server.Controllers
 {
+    [Authorize]
+    [ApiController]
     [Route("/template")]
-    public class UserTemplateController : Controller
+    public class UserTemplateController : ControllerBase
     {
         private readonly ILogger<UserTemplateController> _logger;
         private readonly IUserTemplateService _service;
@@ -29,7 +34,7 @@ namespace auth_server.Controllers
             try
             {
                 ICollection<UserTemplateDTO> templates = await this._service.GetAll();
-                if (templates.Count == 0) return NotFound("There are currently no templates registered");
+                if (templates.Count == 0) return NotFound(new Error("There are currently no templates registered"));
                 return Ok(templates);
             }
             catch (Exception e)
@@ -45,7 +50,7 @@ namespace auth_server.Controllers
             try
             {
                 UserTemplateDTO template = await this._service.GetById(Guid.Parse(id));
-                if (template == null) return NotFound(String.Format("The template with ID {0} does not exist", id));
+                if (template == null) return NotFound(new Error(String.Format("The template with ID {0} does not exist", id)));
                 return Ok(template);
             }
             catch (Exception e)
@@ -56,12 +61,13 @@ namespace auth_server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTemplate([FromBody] UserTemplate template)
+        public async Task<IActionResult> CreateTemplate([FromBody] CreateTemplateCommand command)
         {
             try
             {
-                UserTemplateDTO createdTemplate = await this._service.Create(template);
-                if (createdTemplate == null) return BadRequest("The template you tried to create already exists");
+                Guid organizationID = JwtClaim.GetID(User);
+                UserTemplateDTO createdTemplate = await this._service.Create(organizationID, command);
+                if (createdTemplate == null) return BadRequest(new Error("The template you tried to create already exists"));
                 return Created("template/", createdTemplate._tid);
             }
             catch (Exception e)
@@ -77,8 +83,8 @@ namespace auth_server.Controllers
             try
             {
                 UserTemplateDTO template = await this._service.Delete(Guid.Parse(id));
-                if (template == null) return NotFound(String.Format("The template with ID {0} does not exist", id));
-                return Ok(String.Format("The template with ID {0} was successfully deleted", id));
+                if (template == null) return NotFound(new Error(String.Format("The template with ID {0} does not exist", id)));
+                return Ok(new Success(String.Format("The template with ID {0} was successfully deleted", id)));
             }
             catch (Exception e)
             {
