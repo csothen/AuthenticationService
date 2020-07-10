@@ -90,7 +90,7 @@ export default class AuthenticationForm extends Component {
             </a>
           </div>
           {this.state.isLogin && (
-            <div className="signin-form">
+            <div className="form">
               <div>
                 <div>
                   <label>Email</label>
@@ -131,7 +131,7 @@ export default class AuthenticationForm extends Component {
             </div>
           )}
           {!this.state.isLogin && (
-            <div className="signup-form">
+            <div className="form">
               <div>
                 <label>Organization Name</label>
                 <input
