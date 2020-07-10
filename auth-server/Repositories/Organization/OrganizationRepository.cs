@@ -29,6 +29,13 @@ namespace auth_server.Repositories.OrganizationContext
             .SingleOrDefaultAsync();
         }
 
+        public async Task<Organization> GetByEmail(string email)
+        {
+            return await _dbContext.Organizations
+            .Where(org => org.email == email)
+            .SingleOrDefaultAsync();
+        }
+
         public async Task<Organization> Create(Organization org)
         {
             _dbContext.Organizations.Add(org);
@@ -39,6 +46,12 @@ namespace auth_server.Repositories.OrganizationContext
         public async Task Delete(Organization org)
         {
             _dbContext.Organizations.Remove(org);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task Update(Organization org)
+        {
+            _dbContext.Organizations.Update(org);
             await _dbContext.SaveChangesAsync();
         }
 
