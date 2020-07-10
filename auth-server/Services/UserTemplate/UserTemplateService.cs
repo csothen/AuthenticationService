@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using auth_server.Controllers.Commands;
+using auth_server.Models.OrganizationModels;
 using auth_server.Models.UserTemplateModels;
 using auth_server.Repositories.UserTemplateContext;
 
@@ -10,10 +12,12 @@ namespace auth_server.Services
     {
 
         private readonly IUserTemplateRepository _repo;
+        private readonly IOrganizationService _orgService;
 
-        public UserTemplateService(IUserTemplateRepository repo)
+        public UserTemplateService(IUserTemplateRepository repo, IOrganizationService orgService)
         {
             this._repo = repo;
+            this._orgService = orgService;
         }
 
         public async Task<ICollection<UserTemplateDTO>> GetAll()
@@ -55,13 +59,15 @@ namespace auth_server.Services
             }
         }
 
-        public async Task<UserTemplateDTO> Create(UserTemplate template)
+        public async Task<UserTemplateDTO> Create(Guid orgID, CreateTemplateCommand command)
         {
             try
             {
-                UserTemplateDTO existingTemplate = await this.GetById(template._tid);
-                if (existingTemplate != null) return null;
+                Organization org = await this._orgService.GetById(orgID);
+                UserTemplate template = new UserTemplate(org, command.attributes);
                 UserTemplate createdTemplate = await this._repo.Create(template);
+                org.associateTemplate(createdTemplate);
+                await this._orgService.Update(org);
                 UserTemplateDTO dto = new UserTemplateDTO(createdTemplate._tid, createdTemplate.attributes);
                 return dto;
             }
