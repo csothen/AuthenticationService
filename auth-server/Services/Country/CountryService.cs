@@ -24,7 +24,7 @@ namespace auth_server.Services
             this._repo = repo;
         }
 
-        public async Task<bool> SetupCountries()
+        public async Task<bool> Setup()
         {
             try
             {
