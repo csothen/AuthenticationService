@@ -4,8 +4,8 @@ namespace auth_server.Models.Authentication
 {
     public class AuthenticationResponse
     {
-        public string token;
-        public OrganizationDTO organization;
+        public string token { get; set; }
+        public OrganizationDTO organization { get; set; }
 
         public AuthenticationResponse(string p_token, OrganizationDTO p_organization)
         {

@@ -41,13 +41,13 @@ namespace auth_server.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetOrganizationById(string id)
+        [HttpGet("{email}")]
+        public async Task<IActionResult> GetOrganizationByEmail(string email)
         {
             try
             {
-                Organization organization = await this._service.GetById(Guid.Parse(id));
-                if (organization == null) return NotFound(new Error(String.Format("The organization with ID {0} does not exist", id)));
+                Organization organization = await this._service.GetByEmail(email);
+                if (organization == null) return NotFound(new Error(String.Format("The organization with email {0} does not exist", email)));
                 return Ok(organization);
             }
             catch (Exception e)
@@ -57,14 +57,14 @@ namespace auth_server.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrganization(string id)
+        [HttpDelete("{email}")]
+        public async Task<IActionResult> DeleteOrganization(string email)
         {
             try
             {
-                Organization org = await this._service.Delete(Guid.Parse(id));
-                if (org == null) return NotFound(new Error(String.Format("The organization with ID {0} does not exist", id)));
-                return Ok(new Success(String.Format("The organization with ID {0} was successfully deleted", id)));
+                Organization org = await this._service.Delete(email);
+                if (org == null) return NotFound(new Error(String.Format("The organization with email {0} does not exist", email)));
+                return Ok(new Success(String.Format("The organization with email {0} was successfully deleted", email)));
             }
             catch (Exception e)
             {

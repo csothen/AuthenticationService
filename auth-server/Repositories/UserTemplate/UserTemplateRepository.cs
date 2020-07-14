@@ -28,6 +28,14 @@ namespace auth_server.Repositories.UserTemplateContext
             .Where(template => template._tid == id)
             .SingleOrDefaultAsync();
         }
+
+        public async Task<ICollection<UserTemplate>> GetByOrg(string email)
+        {
+            return await _dbContext.UserTemplates
+            .Where(template => template.organization.email == email)
+            .ToListAsync();
+        }
+
         public async Task<UserTemplate> Create(UserTemplate template)
         {
             _dbContext.UserTemplates.Add(template);

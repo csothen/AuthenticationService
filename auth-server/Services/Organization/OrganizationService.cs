@@ -30,11 +30,11 @@ namespace auth_server.Services
             }
         }
 
-        public async Task<Organization> GetById(Guid id)
+        public async Task<Organization> GetByEmail(string email)
         {
             try
             {
-                Organization org = await _repo.GetById(id);
+                Organization org = await _repo.GetByEmail(email);
                 return org;
             }
             catch (Exception)
@@ -47,7 +47,7 @@ namespace auth_server.Services
         {
             try
             {
-                Organization existingOrg = await this.GetById(org._oid);
+                Organization existingOrg = await this.GetByEmail(org.email);
                 if (existingOrg != null) return null;
                 Organization createdOrg = await this._repo.Create(org);
                 return createdOrg;
@@ -58,11 +58,11 @@ namespace auth_server.Services
             }
         }
 
-        public async Task<Organization> Delete(Guid id)
+        public async Task<Organization> Delete(string email)
         {
             try
             {
-                Organization org = await this.GetById(id);
+                Organization org = await this.GetByEmail(email);
                 if (org == null) return null;
                 await this._repo.Delete(org);
                 return org;
@@ -77,7 +77,7 @@ namespace auth_server.Services
         {
             try
             {
-                Organization org = await this.GetById(updatedOrg._oid);
+                Organization org = await this.GetByEmail(updatedOrg.email);
                 if (org == null) return null;
                 await this._repo.Update(updatedOrg);
                 return updatedOrg;

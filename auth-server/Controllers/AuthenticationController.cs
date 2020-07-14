@@ -1,11 +1,12 @@
+using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 using auth_server.Services;
 using auth_server.Controllers.Commands;
-using System.Threading.Tasks;
 using auth_server.Models.Authentication;
-using System;
+using auth_server.Models.Responses;
 
 namespace auth_server.Controllers
 {
@@ -23,7 +24,7 @@ namespace auth_server.Controllers
             this._service = service;
         }
 
-        [HttpPost("/login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginCommand command)
         {
             try
@@ -39,20 +40,24 @@ namespace auth_server.Controllers
             }
         }
 
-        [HttpPost("/register")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterCommand command)
         {
-            try
+            if (command.Validate())
             {
-                AuthenticationResponse response = await this._service.register(command);
-                if (response == null) return Unauthorized();
-                return Ok(response);
+                try
+                {
+                    AuthenticationResponse response = await this._service.register(command);
+                    if (response == null) return Unauthorized("The email is already being used");
+                    return Ok(response);
+                }
+                catch (Exception e)
+                {
+                    this._logger.LogError(e, e.Message);
+                    return StatusCode(500);
+                }
             }
-            catch (Exception e)
-            {
-                this._logger.LogError(e, e.Message);
-                return StatusCode(500);
-            }
+            return BadRequest(new Error("There must be data to register"));
         }
 
     }

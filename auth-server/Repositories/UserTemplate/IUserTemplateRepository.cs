@@ -10,6 +10,7 @@ namespace auth_server.Repositories.UserTemplateContext
     {
         Task<ICollection<UserTemplate>> GetAll();
         Task<UserTemplate> GetById(Guid id);
+        Task<ICollection<UserTemplate>> GetByOrg(string email);
         Task<UserTemplate> Create(UserTemplate template);
         Task Delete(UserTemplate template);
     }

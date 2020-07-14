@@ -6,14 +6,14 @@ namespace auth_server.Utils
 {
     public static class JwtClaim
     {
-        public static Guid GetID(ClaimsPrincipal principal)
+        public static string GetEmail(ClaimsPrincipal principal)
         {
 
             foreach (Claim claim in principal.Claims)
             {
-                if (claim.Type == ClaimTypes.Name)
+                if (claim.Type == ClaimTypes.Email)
                 {
-                    return Guid.Parse(claim.Value);
+                    return claim.Value;
                 }
             }
             throw new Exception("User claim was not found");

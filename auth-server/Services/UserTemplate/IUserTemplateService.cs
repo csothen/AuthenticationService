@@ -10,7 +10,8 @@ namespace auth_server.Services
     {
         Task<ICollection<UserTemplateDTO>> GetAll();
         Task<UserTemplateDTO> GetById(Guid id);
-        Task<UserTemplateDTO> Create(Guid orgID, CreateTemplateCommand command);
+        Task<ICollection<UserTemplateDTO>> GetByOrg(string email);
+        Task<UserTemplateDTO> Create(string email, CreateTemplateCommand command);
         Task<UserTemplateDTO> Delete(Guid id);
     }
 }

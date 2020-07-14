@@ -59,11 +59,11 @@ namespace auth_server.Services
             }
         }
 
-        public async Task<UserTemplateDTO> Create(Guid orgID, CreateTemplateCommand command)
+        public async Task<UserTemplateDTO> Create(string email, CreateTemplateCommand command)
         {
             try
             {
-                Organization org = await this._orgService.GetById(orgID);
+                Organization org = await this._orgService.GetByEmail(email);
                 UserTemplate template = new UserTemplate(org, command.attributes);
                 UserTemplate createdTemplate = await this._repo.Create(template);
                 org.associateTemplate(createdTemplate);
@@ -90,6 +90,24 @@ namespace auth_server.Services
             catch (System.Exception)
             {
                 throw new Exception("Internal error deleting an existing User Template");
+            }
+        }
+
+        public async Task<ICollection<UserTemplateDTO>> GetByOrg(string email)
+        {
+            try
+            {
+                ICollection<UserTemplateDTO> dtos = new List<UserTemplateDTO>();
+                ICollection<UserTemplate> templates = await this._repo.GetByOrg(email);
+                foreach (UserTemplate t in templates)
+                {
+                    dtos.Add(new UserTemplateDTO(t._tid, t.attributes));
+                }
+                return dtos;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Internal error fetching User Templates");
             }
         }
     }

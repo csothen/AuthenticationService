@@ -27,7 +27,6 @@ namespace auth_server.Controllers
             this._service = service;
         }
 
-
         [HttpGet]
         public async Task<IActionResult> GetTemplates()
         {
@@ -60,14 +59,28 @@ namespace auth_server.Controllers
             }
         }
 
+        [HttpGet("org/{email}")]
+        public async Task<IActionResult> GetTemplatesByOrg(string email)
+        {
+            try
+            {
+                ICollection<UserTemplateDTO> templates = await this._service.GetByOrg(email);
+                return Ok(templates);
+            }
+            catch (Exception e)
+            {
+                this._logger.LogError(e, e.Message);
+                return StatusCode(500);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateTemplate([FromBody] CreateTemplateCommand command)
         {
             try
             {
-                Guid organizationID = JwtClaim.GetID(User);
-                UserTemplateDTO createdTemplate = await this._service.Create(organizationID, command);
-                if (createdTemplate == null) return BadRequest(new Error("The template you tried to create already exists"));
+                string orgEmail = JwtClaim.GetEmail(User);
+                UserTemplateDTO createdTemplate = await this._service.Create(orgEmail, command);
                 return Created("template/", createdTemplate._tid);
             }
             catch (Exception e)

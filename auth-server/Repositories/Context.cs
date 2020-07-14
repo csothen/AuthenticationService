@@ -21,7 +21,7 @@ namespace auth_server.Repositories
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Organization
-            modelBuilder.Entity<Organization>().HasKey(o => o._oid);
+            modelBuilder.Entity<Organization>().HasKey(o => o.email);
             modelBuilder.Entity<Organization>().HasMany(o => o._templates).WithOne(t => t.organization);
 
             // Countries

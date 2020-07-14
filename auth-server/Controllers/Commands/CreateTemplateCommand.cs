@@ -5,7 +5,8 @@ namespace auth_server.Controllers.Commands
 {
     public class CreateTemplateCommand : ICommand
     {
-        public ICollection<UserTemplateAttribute> attributes;
+        public ICollection<UserTemplateAttribute> attributes { get; set; }
+
 
         public bool Validate()
         {

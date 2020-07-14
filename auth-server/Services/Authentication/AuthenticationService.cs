@@ -35,7 +35,7 @@ namespace auth_server.Services
                 if (loginPassword != org.password) return null;
 
                 var token = generateJwtToken(org);
-                OrganizationDTO dto = new OrganizationDTO(org._oid, org.email, org.name, org.password);
+                OrganizationDTO dto = new OrganizationDTO(org.email, org.name);
 
                 return new AuthenticationResponse(token, dto);
             }
@@ -49,6 +49,9 @@ namespace auth_server.Services
         {
             try
             {
+                Organization existingOrg = await this._repo.GetByEmail(command.email);
+                if (existingOrg != null) return null;
+
                 RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
                 byte[] data = new byte[30];
                 rng.GetBytes(data);
@@ -62,7 +65,7 @@ namespace auth_server.Services
                 org = await this._repo.Create(org);
 
                 var token = generateJwtToken(org);
-                OrganizationDTO dto = new OrganizationDTO(org._oid, org.email, org.name, org.password);
+                OrganizationDTO dto = new OrganizationDTO(org.email, org.name);
 
                 return new AuthenticationResponse(token, dto);
             }
@@ -89,7 +92,7 @@ namespace auth_server.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, org._oid.ToString())
+                    new Claim(ClaimTypes.Email, org.email)
                 }),
                 Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

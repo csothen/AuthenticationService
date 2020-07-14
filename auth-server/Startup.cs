@@ -73,6 +73,7 @@ namespace auth_server
             services.AddTransient<IOrganizationService, OrganizationService>();
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<IUserTemplateService, UserTemplateService>();
+            services.AddTransient<IAuthenticationService, AuthenticationService>();
 
             // Repositories
             services.AddTransient<IOrganizationRepository, OrganizationRepository>();
@@ -101,7 +102,7 @@ namespace auth_server
 
 
             //ctx.Database.EnsureDeleted();
-            countries.Setup();
+            //countries.Setup();
 
             // RUN "dotnet ef migrations add NAME_OF_ACTION" to update DB
             ctx.Database.Migrate();

@@ -1,10 +1,15 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+
+import { login, register } from "../../services/AuthService";
+import { alertSuccess, alertError } from "../../services/AlertService";
 
 export default class AuthenticationForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLogin: true,
+      loggedIn: false,
       loginEmail: "",
       loginPassword: "",
       registerOrgName: "",
@@ -16,55 +21,63 @@ export default class AuthenticationForm extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSignin = this.handleSignin.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
-    this.validateRequest = this.validateRequest.bind(this);
-  }
-
-  validateRequest(request) {
-    for (var el in request) {
-      if (request[el] === "") {
-        return false;
-      }
-    }
-    return true;
   }
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  handleSignin(event) {
+  async handleSignin(event) {
     event.preventDefault();
 
-    const requestBody = {
-      email: this.state.loginEmail,
-      password: this.state.loginPassword,
-    };
-
-    const valid = this.validateRequest(requestBody);
-
-    if (valid) {
-      console.log(requestBody);
-    } else {
-      console.log("Inválido");
-    }
+    await login(this.state.loginEmail, this.state.loginPassword)
+      .then((response) => {
+        this.props.login(response.data);
+        alertSuccess("Signed In", "You logged in successfully").then(() => {
+          this.setState({ loggedIn: true });
+        });
+      })
+      .catch((error) => {
+        let status = error.response.status;
+        if (status === 500) {
+          alertError("Unknown error", "Please try again later").then(() => {
+            this.setState({ loginPassword: "" });
+          });
+        } else {
+          alertError("Unauthorized", "Your credentials were wrong").then(() => {
+            this.setState({ loginPassword: "" });
+          });
+        }
+      });
   }
 
-  handleSignup(event) {
+  async handleSignup(event) {
     event.preventDefault();
 
     if (this.state.registerPassword === this.state.registerConfirmPassword) {
-      const requestBody = {
-        email: this.state.registerEmail,
-        orgName: this.state.registerOrgName,
-        password: this.state.registerPassword,
-      };
-
-      const valid = this.validateRequest(requestBody);
-
-      if (valid) {
-        console.log(requestBody);
+      let response = await register(
+        this.state.registerEmail,
+        this.state.registerOrgName,
+        this.state.registerPassword
+      );
+      if (response.status === 200) {
+        this.props.login(response.data);
+        alertSuccess("Signed Up", "Welcome to the platform").then(() => {
+          return <Redirect to="/templates" />;
+        });
+      } else if (response.status === 500) {
+        alertError("Unknown error", "Please try again later").then(() => {
+          this.setState({ registerPassword: "", registerConfirmPassword: "" });
+        });
       } else {
-        console.log("Inválido");
+        alertError("Taken", "The email inserted is already being used").then(
+          () => {
+            this.setState({
+              registerPassword: "",
+              registerConfirmPassword: "",
+            });
+          }
+        );
       }
     } else {
       console.log("Não são iguais");
@@ -74,6 +87,7 @@ export default class AuthenticationForm extends Component {
   render() {
     return (
       <form className="auth-form">
+        {this.state.loggedIn && <Redirect to="/templates" />}
         <div className="form-data-container">
           <div className="form-links">
             <a

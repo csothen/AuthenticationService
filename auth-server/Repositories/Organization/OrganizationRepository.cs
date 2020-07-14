@@ -22,13 +22,6 @@ namespace auth_server.Repositories.OrganizationContext
             return await _dbContext.Organizations.ToListAsync();
         }
 
-        public async Task<Organization> GetById(Guid id)
-        {
-            return await _dbContext.Organizations
-            .Where(org => org._oid == id)
-            .SingleOrDefaultAsync();
-        }
-
         public async Task<Organization> GetByEmail(string email)
         {
             return await _dbContext.Organizations
@@ -40,7 +33,7 @@ namespace auth_server.Repositories.OrganizationContext
         {
             _dbContext.Organizations.Add(org);
             await _dbContext.SaveChangesAsync();
-            return await this.GetById(org._oid);
+            return await this.GetByEmail(org.email);
         }
 
         public async Task Delete(Organization org)

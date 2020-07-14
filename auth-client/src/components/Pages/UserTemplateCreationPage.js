@@ -5,7 +5,7 @@ const UserTemplateCreationPage = (props) => {
   return (
     <div>
       <h1 className="header">Create your own user template</h1>
-      <TemplateCreationForm />
+      <TemplateCreationForm user={props.user} />
     </div>
   );
 };

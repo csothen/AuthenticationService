@@ -1,5 +1,9 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+
 import TemplateAttribute from "../Presentational/TemplateAttribute";
+import { create } from "../../services/TemplatesService";
+import { alertSuccess, alertError } from "../../services/AlertService";
 
 const options = {
   0: "Username",
@@ -20,7 +24,6 @@ export default class TemplateCreationForm extends Component {
     this.handleSelectChanges = this.handleSelectChanges.bind(this);
     this.appendAttribute = this.appendAttribute.bind(this);
     this.removeAttribute = this.removeAttribute.bind(this);
-    this.validateAttributes = this.validateAttributes.bind(this);
 
     this.state = {
       counter: 0,
@@ -41,16 +44,6 @@ export default class TemplateCreationForm extends Component {
         },
       ],
     };
-  }
-
-  validateAttributes() {
-    for (let i = 0; i < this.state.attributes.length; i++) {
-      const attr = this.state.attributes[i];
-      if (attr["name"] === "") {
-        return false;
-      }
-    }
-    return true;
   }
 
   appendAttribute(event) {
@@ -129,39 +122,50 @@ export default class TemplateCreationForm extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    if (this.validateAttributes()) {
-      let response = await fetch("https://localhost:5001/template", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ attributes: this.state.attributes }),
+    await create(this.state.attributes, this.props.user.token)
+      .then((response) => {
+        alertSuccess("Success", "Template created successfully").then(() => {
+          this.setState({
+            counter: 0,
+            elements: [],
+            attributes: [],
+          });
+        });
+      })
+      .catch((error) => {
+        alertError("Unknown error", "Please try again later").then(() => {
+          this.setState({
+            counter: 0,
+            elements: [],
+            attributes: [],
+          });
+        });
       });
-      console.log(response.json());
-    } else {
-      console.log("Verificar que todos os campos estão preenchidos");
-    }
   }
 
   render() {
-    return (
-      <form style={{ marginTop: "5rem" }}>
-        {this.state.elements}
-        <div className="row" style={{ paddingTop: "15px" }}>
-          <input
-            className="u-full-width six columns"
-            type="submit"
-            onClick={(e) => this.handleSubmit(e)}
-            value="Create"
-          />
-          <input
-            className="u-full-width five columns"
-            type="submit"
-            onClick={(e) => this.appendAttribute(e)}
-            value="Add"
-          />
-        </div>
-      </form>
-    );
+    if (!this.props.user) {
+      return <Redirect to="/auth" />;
+    } else {
+      return (
+        <form style={{ marginTop: "5rem" }}>
+          {this.state.elements}
+          <div className="row" style={{ paddingTop: "15px" }}>
+            <input
+              className="u-full-width six columns"
+              type="submit"
+              onClick={(e) => this.handleSubmit(e)}
+              value="Create"
+            />
+            <input
+              className="u-full-width five columns"
+              type="submit"
+              onClick={(e) => this.appendAttribute(e)}
+              value="Add"
+            />
+          </div>
+        </form>
+      );
+    }
   }
 }
