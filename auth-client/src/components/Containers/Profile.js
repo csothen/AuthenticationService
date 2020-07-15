@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+
 import { getByOrganization } from "../../services/TemplatesService";
+import { alertError } from "../../services/AlertService";
 
 export default class Profile extends Component {
   constructor(props) {
@@ -16,7 +18,9 @@ export default class Profile extends Component {
         .then((response) => {
           console.log(response);
         })
-        .catch((error) => {});
+        .catch((error) => {
+          alertError("Error", "Failed to load your profile");
+        });
     }
   }
 

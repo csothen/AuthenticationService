@@ -27,10 +27,15 @@ export default class App extends Component {
     localStorage.setItem("user", JSON.stringify(user));
   }
 
+  handleLogout() {
+    localStorage.removeItem("user");
+  }
+
   render() {
     let user = JSON.parse(localStorage.getItem("user"));
     return (
       <Router>
+        <Navbar user={user} logoutHandler={this.handleLogout} />
         <div className="app-page">
           <Switch>
             <Route path="/auth/external/:orgRef" component={ExternalAuthPage} />

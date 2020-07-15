@@ -63,7 +63,7 @@ export default class AuthenticationForm extends Component {
       if (response.status === 200) {
         this.props.login(response.data);
         alertSuccess("Signed Up", "Welcome to the platform").then(() => {
-          return <Redirect to="/templates" />;
+          this.setState({ loggedIn: true });
         });
       } else if (response.status === 500) {
         alertError("Unknown error", "Please try again later").then(() => {
