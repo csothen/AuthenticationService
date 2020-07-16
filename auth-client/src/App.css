@@ -30,6 +30,15 @@ body,
   color: black;
 }
 
+.profile-header {
+  text-align: center;
+  padding-top: 5rem;
+  font-size: 35px;
+  font-family: "Lobster", cursive;
+  font-weight: 600;
+  color: black;
+}
+
 /** NAVBAR CSS */
 
 .navBar {
@@ -151,5 +160,26 @@ body,
   cursor: pointer;
   font-family: "Courier New", Courier, monospace;
   width: 100%;
+  text-align: center;
+}
+
+/** Profile */
+
+.profile-dropbutton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-content-header {
+  font-weight: 600;
+  border-bottom: solid #111;
+  transition: height 0.5s ease-in;
+}
+
+.profile-dropdown-content {
+  border-radius: 5px;
+  border: solid black;
+  margin-bottom: 2rem;
   text-align: center;
 }

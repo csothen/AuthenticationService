@@ -5,16 +5,6 @@ import TemplateAttribute from "../Presentational/TemplateAttribute";
 import { create } from "../../services/TemplatesService";
 import { alertSuccess, alertError } from "../../services/AlertService";
 
-const options = {
-  0: "Username",
-  1: "Email",
-  2: "Password",
-  3: "Text",
-  4: "Date",
-  5: "Integer",
-  6: "Decimal number",
-};
-
 export default class TemplateCreationForm extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +20,6 @@ export default class TemplateCreationForm extends Component {
       elements: [
         <TemplateAttribute
           ID={0}
-          options={options}
           inputHandler={this.handleInputChanges}
           selectHandler={this.handleSelectChanges}
           removeHandler={this.removeAttribute}
@@ -58,7 +47,6 @@ export default class TemplateCreationForm extends Component {
             ...this.state.elements,
             <TemplateAttribute
               ID={this.state.counter}
-              options={options}
               inputHandler={this.handleInputChanges}
               selectHandler={this.handleSelectChanges}
               removeHandler={this.removeAttribute}

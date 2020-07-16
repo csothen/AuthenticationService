@@ -18,24 +18,33 @@ const validateAttributes = (attributes) => {
   return true;
 };
 
-export const getAll = async () => {
+const setAuthorization = (token) => {
+  let newConfig = config;
+  newConfig.headers.Authorization = "Bearer " + token;
+  return newConfig;
+};
+
+export const getAll = async (token) => {
   let url = process.env.REACT_APP_API_URL + "template";
-  let response = await axios.get(url);
-  console.log(response);
+  let authConfig = setAuthorization(token);
+
+  let response = await axios.get(url, authConfig);
   return response;
 };
 
-export const getByOrganization = async (orgEmail) => {
+export const getByOrganization = async (orgEmail, token) => {
   let url = process.env.REACT_APP_API_URL + "template/org/" + orgEmail;
-  let response = await axios.get(url);
-  console.log(response);
+  let authConfig = setAuthorization(token);
+
+  let response = await axios.get(url, authConfig);
   return response;
 };
 
-export const getById = async (id) => {
+export const getById = async (id, token) => {
   let url = process.env.REACT_APP_API_URL + "template/" + id;
-  let response = await axios.get(url);
-  console.log(response);
+  let authConfig = setAuthorization(token);
+
+  let response = await axios.get(url, authConfig);
   return response;
 };
 
@@ -51,8 +60,7 @@ export const create = async (attributes, token) => {
   }
 
   let valid = validateAttributes(body);
-  let authConfig = config;
-  authConfig.headers.Authorization = "Bearer " + token;
+  let authConfig = setAuthorization(token);
 
   if (valid) return await axios.post(url, JSON.stringify(body), authConfig);
   return "Inválido";

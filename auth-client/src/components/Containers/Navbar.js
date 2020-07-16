@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { FaAlignRight } from "react-icons/fa";
 import { alertSuccess } from "../../services/AlertService";
 
 export default class NavBar extends Component {
@@ -21,11 +20,12 @@ export default class NavBar extends Component {
             <a href="/templates">Create Template</a>
           </li>
           <li>
-            <a href="/profile">{this.props.user.organization.name}</a>
+            <a href="/profile">Profile</a>
           </li>
           <li>
-            {" "}
-            <a onClick={this.handleLogout}>Logout</a>
+            <a href="/" onClick={this.handleLogout}>
+              Logout
+            </a>
           </li>
         </ul>
       );

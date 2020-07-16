@@ -35,6 +35,7 @@ export default class AuthenticationForm extends Component {
         this.props.login(response.data);
         alertSuccess("Signed In", "You logged in successfully").then(() => {
           this.setState({ loggedIn: true });
+          window.location.reload();
         });
       })
       .catch((error) => {
@@ -44,7 +45,10 @@ export default class AuthenticationForm extends Component {
             this.setState({ loginPassword: "" });
           });
         } else {
-          alertError("Unauthorized", "Your credentials were wrong").then(() => {
+          alertError(
+            "Unauthorized",
+            "The credentials you inserted were incorrect"
+          ).then(() => {
             this.setState({ loginPassword: "" });
           });
         }
@@ -87,7 +91,7 @@ export default class AuthenticationForm extends Component {
   render() {
     return (
       <form className="auth-form">
-        {this.state.loggedIn && <Redirect to="/templates" />}
+        {this.state.loggedIn && <Redirect to="/" />}
         <div className="form-data-container">
           <div className="form-links">
             <a

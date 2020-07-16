@@ -1,9 +1,11 @@
 import React from "react";
 
+import { types } from "../../enums/types";
+
 const TemplateAttribute = (props) => {
-  const options = Object.keys(props.options).map((option, i) => (
-    <option key={props.ID + "_" + i} value={option}>
-      {props.options[option]}
+  const options = Object.keys(types).map((type, i) => (
+    <option key={props.ID + "_" + i} value={type}>
+      {types[type]}
     </option>
   ));
   return (
@@ -26,7 +28,11 @@ const TemplateAttribute = (props) => {
         </select>
       </div>
       <div className="one columns">
-        <button onClick={(e) => props.removeHandler(e, props.ID)}>❌</button>
+        <button onClick={(e) => props.removeHandler(e, props.ID)}>
+          <span role="img" aria-label="Remove">
+            ❌
+          </span>
+        </button>
       </div>
     </div>
   );
